@@ -34,16 +34,20 @@
         <div id="wynik">
         <?php
             $polaczenie = mysqli_connect('localhost', 'root', '','kwiaciarnia');
-
-            $zapytanie = "SELECT * FROM kwiaciarnie WHERE miasto = '".$_POST['miasto']."'";
+            if(isset($_POST['miasto']) && !empty($_POST['miasto'])){
+                $miasto = $_POST['miasto'];
+            $zapytanie = "SELECT * FROM kwiaciarnie WHERE miasto = '".$_POST['miasto']."';";
 
             $wynik = mysqli_query($polaczenie, $zapytanie);
-                if(mysqli_num_rows($wynik) > 0) {
-                    echo "<h3>" . $_POST['nazwa'] . ", " . $_POST['ulica'] . "</h3>";
-
-                } else {
-                    echo "Brak kwiaciarni w podanym mieście";
+            
+            if(mysqli_num_rows($wynik) > 0){
+                while($wiersz = mysqli_fetch_assoc($wynik)){
+                    echo "<h3>" . $wiersz['nazwa'] . ", " . $wiersz['ulica'] . "</h3>";
                 }
+            }
+        }
+
+            mysqli_close($polaczenie);
         ?>
         </div>
     </main>

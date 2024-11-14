@@ -22,7 +22,7 @@ ol {
     margin: 5px;
 }
 
-li {
+li::marker {
     color: snow;
 }
 
